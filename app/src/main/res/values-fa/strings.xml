@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">پوستر ARMO</string>
+    <string name="editor_title">ویرایشگر مسابقه</string>
+    <string name="export_title">خروجی پوستر</string>
+    <string name="history_title">تاریخچه مسابقات</string>
+
+    <string name="gameweek_label">هفته (مثلاً GW6)</string>
+    <string name="home_team">تیم میزبان</string>
+    <string name="away_team">تیم میهمان</string>
+    <string name="formation_hint">ترکیب (مثلاً 4-2-3-1)</string>
+    <string name="xg_label">امید گل (xG)</string>
+    <string name="color_label">رنگ</string>
+    <string name="abbr_label">مخفف (حداکثر ۳ حرف)</string>
+
+    <string name="game_notes_title">نکات کلی بازی</string>
+    <string name="add_note">افزودن نکته</string>
+    <string name="note_hint">متن نکته...</string>
+
+    <string name="home_players_title">بازیکنان میزبان</string>
+    <string name="away_players_title">بازیکنان میهمان</string>
+    <string name="player_name_hint">نام بازیکن</string>
+    <string name="add_player">افزودن بازیکن</string>
+    <string name="remove">حذف</string>
+
+    <string name="takeaways_title">نکات کلیدی (Takeaways)</string>
+    <string name="add_takeaway">افزودن نکته کلیدی</string>
+    <string name="takeaway_hint">نکته کلیدی در یک خط...</string>
+
+    <string name="render_button">تولید پوستر</string>
+    <string name="rendering_progress">در حال تولید پوستر ۲۴۰۰×۲۴۰۰...</string>
+    <string name="save_gallery">ذخیره در گالری</string>
+    <string name="share_x">اشتراک‌گذاری در X</string>
+    <string name="saved_success">در Pictures/ARMO NOTES ذخیره شد</string>
+    <string name="save_error">خطا در ذخیره تصویر</string>
+
+    <string name="status_fits">اندازه کاملاً مناسب است (سطح فیت %1$d)</string>
+    <string name="status_overflow">متن %1$d پیکسل بلندتر است — یک یادداشت را کوتاه کن</string>
+    <string name="status_failed">خطا در تولید پوستر: %1$s</string>
+    <string name="font_warning">زمان بارگذاری فونت به پایان رسید — فونت پشتیبان اعمال شد</string>
+
+    <string name="history_empty">هنوز مسابقه‌ای ثبت نشده است</string>
+    <string name="duplicate_match">کپی و ویرایش</string>
+    <string name="delete_match">حذف</string>
+    <string name="open_match">باز کردن</string>
+    <string name="confirm_delete">این مسابقه حذف شود؟</string>
+    <string name="cancel">انصراف</string>
+    <string name="yes">بله</string>
+
+    <string name="scale_2x">کیفیت اصلی (۲۴۰۰×۲۴۰۰)</string>
+    <string name="scale_1x">استاندارد (۱۲۰۰×۱۲۰۰)</string>
+</resources>

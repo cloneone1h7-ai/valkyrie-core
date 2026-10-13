@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">ARMO Poster</string>
+    <string name="editor_title">Match Editor</string>
+    <string name="export_title">Poster Output</string>
+    <string name="history_title">Match History</string>
+
+    <string name="gameweek_label">Gameweek (e.g. GW6)</string>
+    <string name="home_team">Home Team</string>
+    <string name="away_team">Away Team</string>
+    <string name="formation_hint">Formation (e.g. 4-2-3-1)</string>
+    <string name="xg_label">xG</string>
+    <string name="color_label">Color</string>
+    <string name="abbr_label">Abbreviation (max 3)</string>
+
+    <string name="game_notes_title">The Game Notes</string>
+    <string name="add_note">Add Note</string>
+    <string name="note_hint">Note bullet text...</string>
+
+    <string name="home_players_title">Home Players</string>
+    <string name="away_players_title">Away Players</string>
+    <string name="player_name_hint">Player Name</string>
+    <string name="add_player">Add Player</string>
+    <string name="remove">Remove</string>
+
+    <string name="takeaways_title">Biggest Takeaways</string>
+    <string name="add_takeaway">Add Takeaway</string>
+    <string name="takeaway_hint">Single line takeaway...</string>
+
+    <string name="render_button">Render Poster</string>
+    <string name="rendering_progress">Rendering 2400×2400 Poster...</string>
+    <string name="save_gallery">Save to Gallery</string>
+    <string name="share_x">Share to X</string>
+    <string name="saved_success">Saved to Pictures/ARMO NOTES</string>
+    <string name="save_error">Failed to save image</string>
+
+    <string name="status_fits">FITS PERFECTLY (Level %1$d)</string>
+    <string name="status_overflow">Text is %1$d px too long — shorten a note</string>
+    <string name="status_failed">Render failed: %1$s</string>
+    <string name="font_warning">Font loading timed out — verified fallback applied</string>
+
+    <string name="history_empty">No saved matches yet</string>
+    <string name="duplicate_match">Duplicate</string>
+    <string name="delete_match">Delete</string>
+    <string name="open_match">Open</string>
+    <string name="confirm_delete">Delete this match?</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+
+    <string name="scale_2x">High Resolution (2400×2400)</string>
+    <string name="scale_1x">Standard (1200×1200)</string>
+</resources>
