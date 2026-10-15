@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1200, height=1200, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>ARMO NOTES Poster</title>
 <style>
 @font-face { font-family:'Anton'; src:url('../fonts/Anton-Regular.ttf') format('truetype'); font-weight:400; }
@@ -18,20 +18,44 @@
   --muted: #A0AEC0;
   --body: #E2E8F0;
   --dot: #CBD5E1;
+  --font-body: 'Inter', sans-serif;
+  --body-font-size: 19px;
+  --name-font-size: 29px;
+  --body-font-weight: 400;
+  --body-line-height: 1.35;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:#04100A; margin:0; padding:0; overflow:hidden; }
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #04100A;
+}
+
+#viewport-stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #04100A;
+}
 
 .slide {
-  width:1200px;
-  height:1200px;
-  position:relative;
-  overflow:hidden;
-  margin:0 auto;
-  background:var(--bg);
-  font-family:'Inter', sans-serif;
-  color:var(--white);
+  width: 1200px;
+  height: 1200px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Inter', sans-serif;
+  color: var(--white);
 }
 
 .wm { position:absolute; inset:0; pointer-events:none; }
@@ -96,27 +120,47 @@ body { background:#04100A; margin:0; padding:0; overflow:hidden; }
 
 .gap-b { height:12px; flex:0 0 auto; }
 
-.rows.two { display:block; }
+.rows.two { display:block; width:100%; }
 .rows .r {
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap:0 34px;
-  align-items:center;
+  align-items:flex-start;
   padding:12px 0 11px;
   border-bottom:1px solid var(--hair);
+  width:100%;
 }
 .rows .r:first-child { padding-top:0; }
 .rows .r:last-child { border-bottom:none; padding-bottom:0; }
 
-.cellname { font-family:'Anton'; font-size:29px; line-height:1; margin-bottom:3px; letter-spacing:.4px; }
-.bullets { list-style:none; }
+.rows .r > div {
+  min-width:0;
+  max-width:100%;
+  overflow:hidden;
+}
+
+.cellname {
+  font-family:'Anton';
+  font-size:var(--name-font-size, 29px);
+  line-height:1;
+  margin-bottom:3px;
+  letter-spacing:.4px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.bullets { list-style:none; margin:0; padding:0; width:100%; }
 .bullets li {
-  font-size:19px;
-  line-height:1.35;
+  font-size:var(--body-font-size, 19px);
+  line-height:var(--body-line-height, 1.35);
   color:var(--body);
+  font-weight:var(--body-font-weight, 400);
   padding-left:21px;
   position:relative;
   margin-top:3px;
+  white-space:pre-line;
+  word-break:break-word;
+  overflow-wrap:break-word;
 }
 .bullets li:first-child { margin-top:5px; }
 .bullets li::before {
@@ -140,69 +184,186 @@ body { background:#04100A; margin:0; padding:0; overflow:hidden; }
 .takeaway .t { font-family:'Anton'; font-size:27px; margin-bottom:2px; }
 .takeaway .t .v { color:var(--volt); }
 
-/* Auto-fit ladder classes (Cumulative) */
-.slide.fit1 .rows .r { padding: 8px 0 7px; }
-.slide.fit2 .rows .r { padding: 6px 0 5px; }
-.slide.fit3 .bullets li { margin-top: 1px; line-height: 1.28; }
-.slide.fit4 .gap-a { height: 10px !important; }
-.slide.fit4 .gap-b { height: 8px !important; }
-.slide.fit5 .panel { padding: 10px 16px; }
-.slide.fit6 .matchrow img { width: 92px; height: 92px; }
-.slide.fit6 .headline { font-size: 74px; }
+/* Auto-fit ladder classes (Levels 1 to 10) */
+.slide.fit1 .rows .r { padding: 9px 0 8px !important; }
+.slide.fit1 .gap-a { height: 10px !important; }
+.slide.fit1 .gap-b { height: 8px !important; }
+
+.slide.fit2 .rows .r { padding: 7px 0 6px !important; }
+.slide.fit2 .bullets li { margin-top: 2px !important; line-height: 1.30 !important; }
+.slide.fit2 .bullets li:first-child { margin-top: 3px !important; }
+.slide.fit2 .panel { padding: 11px 18px !important; }
+.slide.fit2 .takeaway { padding: 10px 20px !important; }
+
+.slide.fit3 .matchrow img { width: 92px !important; height: 92px !important; }
+.slide.fit3 .headline { font-size: 76px !important; }
+.slide.fit3 .cellname { font-size: 27px !important; }
+.slide.fit3 .bullets li { font-size: 18px !important; padding-left: 19px !important; }
+
+.slide.fit4 .gap-a { height: 6px !important; }
+.slide.fit4 .gap-b { height: 6px !important; }
+.slide.fit4 .scoreline { font-size: 23px !important; }
+.slide.fit4 #home-bar, .slide.fit4 #away-bar { height: 35px !important; font-size: 17px !important; }
+.slide.fit4 #home-xg-val, .slide.fit4 #away-xg-val { font-size: 35px !important; }
+.slide.fit4 .takeaway .t { font-size: 24px !important; }
+
+.slide.fit5 .rows .r { padding: 5px 0 4px !important; }
+.slide.fit5 .bullets li { font-size: 17px !important; line-height: 1.25 !important; margin-top: 1px !important; }
+.slide.fit5 .bullets li::before { top: 9px !important; }
+.slide.fit5 .cellname { font-size: 25px !important; }
+.slide.fit5 .panel { padding: 9px 16px !important; }
+.slide.fit5 .takeaway { padding: 9px 18px !important; }
+
+.slide.fit6 .matchrow img { width: 84px !important; height: 84px !important; }
+.slide.fit6 .headline { font-size: 68px !important; }
+.slide.fit6 .tag { font-size: 26px !important; }
+.slide.fit6 .chip .pill { font-size: 22px !important; padding: 4px 12px 2px !important; }
+.slide.fit6 .gap-a { height: 4px !important; }
+.slide.fit6 .gap-b { height: 4px !important; }
+
+.slide.fit7 .rows .r { padding: 4px 0 3px !important; }
+.slide.fit7 .bullets li { font-size: 16px !important; line-height: 1.22 !important; }
+.slide.fit7 .cellname { font-size: 23px !important; }
+.slide.fit7 #home-bar, .slide.fit7 #away-bar { height: 32px !important; font-size: 15px !important; }
+.slide.fit7 #home-xg-val, .slide.fit7 #away-xg-val { font-size: 32px !important; }
+.slide.fit7 .scoreline { font-size: 21px !important; }
+
+.slide.fit8 .bullets li { font-size: 15px !important; line-height: 1.20 !important; padding-left: 16px !important; }
+.slide.fit8 .bullets li::before { top: 8px !important; width: 3px !important; height: 3px !important; }
+.slide.fit8 .cellname { font-size: 22px !important; }
+.slide.fit8 .panel { padding: 8px 14px !important; }
+.slide.fit8 .takeaway { padding: 8px 16px !important; }
+.slide.fit8 .takeaway .t { font-size: 22px !important; }
+
+.slide.fit9 .headline { font-size: 60px !important; }
+.slide.fit9 .matchrow img { width: 74px !important; height: 74px !important; }
+.slide.fit9 .rows .r { padding: 3px 0 2px !important; }
+
+.slide.fit10 .bullets li { font-size: 14.5px !important; line-height: 1.18 !important; }
+.slide.fit10 .cellname { font-size: 20px !important; }
+.slide.fit10 .tag { font-size: 24px !important; }
+.slide.fit10 .chip .pill { font-size: 20px !important; }
+
+/* Customization: Font Size Options */
+.slide.font-large .bullets li { font-size: 21.5px !important; line-height: 1.36 !important; }
+.slide.font-large .cellname { font-size: 31px !important; }
+.slide.font-large .scoreline { font-size: 26px !important; }
+.slide.font-large .takeaway .t { font-size: 28px !important; }
+
+.slide.font-xlarge .bullets li { font-size: 23.5px !important; line-height: 1.38 !important; }
+.slide.font-xlarge .cellname { font-size: 33px !important; }
+.slide.font-xlarge .scoreline { font-size: 28px !important; }
+.slide.font-xlarge .takeaway .t { font-size: 30px !important; }
+
+/* Customization: High Contrast & Readability */
+.slide.high-contrast .bullets li { color: #F5FBF7 !important; font-weight: 500 !important; }
+.slide.high-contrast .cellname { color: #FFFFFF !important; font-weight: 800 !important; }
+.slide.high-contrast .scoreline { color: #FFFFFF !important; font-weight: 700 !important; }
+.slide.high-contrast #game-notes-title { color: #FFFFFF !important; }
+.slide.high-contrast .takeaway { background: #0c1c15 !important; border: 1px solid rgba(255,255,255,0.18) !important; border-left: 4px solid var(--volt) !important; }
+.slide.high-contrast .panel { background: #0c1c15 !important; border: 1px solid rgba(255,255,255,0.18) !important; }
+
+/* Customization: Expanded Square Canvas (Bigger working space) */
+.slide.canvas-expanded .inner { left: 36px !important; right: 36px !important; top: 28px !important; bottom: 28px !important; }
+.slide.canvas-expanded .rows .r { gap: 0 28px !important; padding: 10px 0 9px !important; }
+.slide.canvas-expanded .panel { padding: 11px 18px !important; }
+.slide.canvas-expanded .takeaway { padding: 10px 20px !important; }
 </style>
 </head>
 <body>
-<div class="slide">
-  <div class="wm">
-    <span class="mark" style="left:112px; top:922px;">FPL ARMO</span>
-    <span class="mark" style="left:624px; top:946px;">FPL ARMO</span>
-  </div>
-  <div class="inner">
-    <div class="headrow">
-      <div class="chip"><span class="fpl">FPL</span><span class="pill">ARMO</span></div>
-      <div class="tag">NOTES · GW6</div>
+<div id="viewport-stage">
+  <div class="slide">
+    <div class="wm">
+      <span class="mark" style="left:112px; top:922px;">FPL ARMO</span>
+      <span class="mark" style="left:624px; top:946px;">FPL ARMO</span>
     </div>
-    <div class="matchrow">
-      <img id="home-crest" src="../logos/chelsea-apisports.png" alt="Chelsea">
-      <div class="headline">CHE <span class="versus">vs</span> BOU</div>
-      <img id="away-crest" src="../logos/bournemouth-apisports.png" alt="Bournemouth">
-    </div>
-    <div class="gap-a"></div>
-    <div class="panel">
-      <div style="display:flex; align-items:center; gap:16px;">
-        <span id="home-dot" style="width:20px;height:20px;border-radius:50%;background:#034694;flex:0 0 auto;"></span>
-        <span id="home-scoreline" class="scoreline">Chelsea (3-4-2-1)</span>
-        <span style="flex:1"></span>
-        <span id="away-dot" style="width:20px;height:20px;border-radius:50%;background:#DA291C;flex:0 0 auto;"></span>
-        <span id="away-scoreline" class="scoreline">Bournemouth (4-2-3-1)</span>
+    <div class="inner">
+      <div class="headrow">
+        <div class="chip"><span class="fpl">FPL</span><span class="pill">ARMO</span></div>
+        <div class="tag">NOTES · GW6</div>
       </div>
-      <div style="height:11px"></div>
-      <div style="display:flex;align-items:center;gap:14px;">
-        <div id="home-bar" style="height:40px;width:79.7%;flex:0 0 79.7%;background:#034694;border-radius:8px;display:flex;align-items:center;padding:0 16px;font-size:19px;font-weight:700;color:#FFFFFF;">xG CHELSEA</div>
-        <span id="home-xg-val" style="font-family:'Anton';font-size:40px;color:var(--white);">1.10</span>
+      <div class="matchrow">
+        <img id="home-crest" src="../logos/chelsea-apisports.png" alt="Chelsea">
+        <div class="headline">CHE <span class="versus">vs</span> BOU</div>
+        <img id="away-crest" src="../logos/bournemouth-apisports.png" alt="Bournemouth">
       </div>
-      <div style="height:8px"></div>
-      <div style="display:flex;align-items:center;gap:14px;">
-        <div id="away-bar" style="height:40px;flex:1;background:#DA291C;border-radius:8px;display:flex;align-items:center;padding:0 16px;font-size:19px;font-weight:700;color:#FFFFFF;">xG BOURNEMOUTH</div>
-        <span id="away-xg-val" style="font-family:'Anton';font-size:40px;color:var(--white);">1.38</span>
+      <div class="gap-a"></div>
+      <div class="panel">
+        <div style="display:flex; align-items:center; gap:16px;">
+          <span id="home-dot" style="width:20px;height:20px;border-radius:50%;background:#034694;flex:0 0 auto;"></span>
+          <span id="home-scoreline" class="scoreline">Chelsea (3-4-2-1)</span>
+          <span style="flex:1"></span>
+          <span id="away-dot" style="width:20px;height:20px;border-radius:50%;background:#DA291C;flex:0 0 auto;"></span>
+          <span id="away-scoreline" class="scoreline">Bournemouth (4-2-3-1)</span>
+        </div>
+        <!-- Center-Out Symmetric xG Container (Default & Recommended) -->
+        <div id="xg-container-centerout" style="display:flex; align-items:center; justify-content:space-between; margin-top:12px; gap:10px;">
+          <!-- Left side: Home team (extends from center to the left towards Home team) -->
+          <div style="flex:1; display:flex; align-items:center; justify-content:flex-end; gap:12px; min-width:0;">
+            <span id="home-xg-val-co" style="font-family:'Anton'; font-size:38px; line-height:1; color:var(--white); flex:0 0 auto;">1.10</span>
+            <div style="flex:1; max-width:260px; display:flex; justify-content:flex-end;">
+              <div id="home-bar-co" style="height:28px; min-width:28px; width:45%; background:linear-gradient(270deg, #034694, rgba(3,70,148,0.3)); border-radius:999px 4px 4px 999px; box-shadow:0 0 10px rgba(0,0,0,0.3);"></div>
+            </div>
+          </div>
+
+          <!-- Center divider pill -->
+          <div style="flex:0 0 auto; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.08); border:1px solid var(--hair); border-radius:999px; padding:3px 14px 2px; font-family:'Anton'; font-size:16px; letter-spacing:1.5px; color:var(--volt);">
+            xG
+          </div>
+
+          <!-- Right side: Away team (extends from center to the right towards Away team) -->
+          <div style="flex:1; display:flex; align-items:center; justify-content:flex-start; gap:12px; min-width:0;">
+            <div style="flex:1; max-width:260px; display:flex; justify-content:flex-start;">
+              <div id="away-bar-co" style="height:28px; min-width:28px; width:70%; background:linear-gradient(90deg, #DA291C, rgba(218,41,28,0.3)); border-radius:4px 999px 999px 4px; box-shadow:0 0 10px rgba(0,0,0,0.3);"></div>
+            </div>
+            <span id="away-xg-val-co" style="font-family:'Anton'; font-size:38px; line-height:1; color:var(--white); flex:0 0 auto;">2.00</span>
+          </div>
+        </div>
+
+        <!-- Stacked xG Container -->
+        <div id="xg-container-stacked">
+          <div style="height:11px"></div>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div id="home-bar-stacked" style="height:40px;width:35%;flex:0 0 35%;background:#034694;border-radius:8px;display:flex;align-items:center;padding:0 16px;font-size:19px;font-weight:700;color:#FFFFFF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">xG CHELSEA</div>
+            <span id="home-xg-val-stacked" style="font-family:'Anton';font-size:40px;color:var(--white);flex:0 0 auto;">1.10</span>
+          </div>
+          <div style="height:8px"></div>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div id="away-bar-stacked" style="height:40px;width:35%;flex:0 0 35%;background:#DA291C;border-radius:8px;display:flex;align-items:center;padding:0 16px;font-size:19px;font-weight:700;color:#FFFFFF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">xG BOURNEMOUTH</div>
+            <span id="away-xg-val-stacked" style="font-family:'Anton';font-size:40px;color:var(--white);flex:0 0 auto;">1.38</span>
+          </div>
+        </div>
+
+        <!-- Side-by-Side xG Container (Saves vertical space and enlarges layout) -->
+        <div id="xg-container-sidebyside" style="display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items:center; margin-top:10px;">
+          <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+            <div id="home-bar-side" style="height:38px; min-width:130px; background:#034694; border-radius:8px; display:flex; align-items:center; padding:0 14px; font-size:17px; font-weight:700; color:#FFFFFF; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">xG CHELSEA</div>
+            <span id="home-xg-val-side" style="font-family:'Anton'; font-size:36px; color:var(--white); flex:0 0 auto;">1.10</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+            <div id="away-bar-side" style="height:38px; min-width:130px; background:#DA291C; border-radius:8px; display:flex; align-items:center; padding:0 14px; font-size:17px; font-weight:700; color:#FFFFFF; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">xG BOURNEMOUTH</div>
+            <span id="away-xg-val-side" style="font-family:'Anton'; font-size:36px; color:var(--white); flex:0 0 auto;">1.38</span>
+          </div>
+        </div>
+
+        <div style="height:10px;border-top:1px solid var(--hair);margin-top:10px;"></div>
+        <div id="game-notes-title" style="font-family:'Anton';font-size:25px;margin-top:7px;">The Game</div>
+        <ul id="game-notes" class="bullets" style="margin-top:1px;">
+          <li>Chelsea were much better organised, with excellent attacking moves, good pressing and clinical finishing.</li>
+        </ul>
       </div>
-      <div style="height:12px;border-top:1px solid var(--hair);margin-top:2px;"></div>
-      <div style="font-family:'Anton';font-size:25px;margin-top:9px;">The Game</div>
-      <ul id="game-notes" class="bullets" style="margin-top:1px;">
-        <li>Chelsea were much better organised, with excellent attacking moves, good pressing and clinical finishing.</li>
-      </ul>
-    </div>
-    <div class="gap-b"></div>
-    <div class="rows two">
-      <!-- Injected row blocks -->
-    </div>
-    <div data-spacer style="flex:1"></div>
-    <div class="takeaway">
-      <div class="t">BIGGEST <span class="v">TAKEAWAY</span></div>
-      <ul id="takeaways" class="bullets">
-        <li>Love the 3 Chelsea upfront But Rogers &gt; Palmer for me</li>
-        <li>Bournemouth: only Tavernier when fixtures improve</li>
-      </ul>
+      <div class="gap-b"></div>
+      <div class="rows two">
+        <!-- Injected row blocks -->
+      </div>
+      <div data-spacer style="flex:1"></div>
+      <div class="takeaway">
+        <div class="t">BIGGEST <span class="v">TAKEAWAY</span></div>
+        <ul id="takeaways" class="bullets">
+          <li>Love the 3 Chelsea upfront But Rogers &gt; Palmer for me</li>
+          <li>Bournemouth: only Tavernier when fixtures improve</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

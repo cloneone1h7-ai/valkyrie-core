@@ -48,4 +48,18 @@
 
     <string name="scale_2x">کیفیت اصلی (۲۴۰۰×۲۴۰۰)</string>
     <string name="scale_1x">استاندارد (۱۲۰۰×۱۲۰۰)</string>
+
+    <string name="logs_title">لاگ و گزارش سیستم</string>
+    <string name="copy_logs">کپی کامل لاگ‌ها</string>
+    <string name="share_logs">ارسال فایل لاگ</string>
+    <string name="clear_logs">پاک کردن لاگ‌ها</string>
+    <string name="logs_copied">تمام لاگ‌ها در کلیپ‌بورد کپی شدند</string>
+    <string name="logs_cleared">لاگ‌ها پاک شدند</string>
+    <string name="filter_all">همه</string>
+    <string name="filter_error">خطا</string>
+    <string name="filter_warn">هشدار</string>
+    <string name="filter_info">اطلاعات</string>
+    <string name="view_logs">مشاهده لاگ‌ها</string>
+    <string name="device_telemetry">مشخصات دستگاه و وضعیت رندر</string>
+    <string name="no_logs">هنوز لاگی ثبت نشده است</string>
 </resources>

@@ -1,109 +1,133 @@
 {
   "premier_league": {
     "Arsenal": {
-      "id": 42,
+      "id": 9825,
       "abbr": "ARS",
       "color": "#EF0107",
       "crest": "logos/arsenal-apisports.png"
     },
     "Aston Villa": {
-      "id": 66,
+      "id": 10252,
       "abbr": "AVL",
       "color": "#670E36",
       "crest": "logos/aston-villa-apisports.png"
     },
     "Bournemouth": {
-      "id": 35,
+      "id": 8678,
       "abbr": "BOU",
       "color": "#DA291C",
       "crest": "logos/bournemouth-apisports.png"
     },
     "Brentford": {
-      "id": 55,
+      "id": 9937,
       "abbr": "BRE",
       "color": "#E30613",
       "crest": "logos/brentford-apisports.png"
     },
     "Brighton": {
-      "id": 51,
+      "id": 10204,
       "abbr": "BHA",
       "color": "#0057B8",
       "crest": "logos/brighton-apisports.png"
     },
-    "Burnley": {
-      "id": 44,
-      "abbr": "BUR",
-      "color": "#6C1D45",
-      "crest": "logos/burnley-apisports.png"
-    },
     "Chelsea": {
-      "id": 49,
+      "id": 8455,
       "abbr": "CHE",
       "color": "#034694",
       "crest": "logos/chelsea-apisports.png"
     },
+    "Coventry": {
+      "id": 8669,
+      "abbr": "COV",
+      "color": "#00A3E0",
+      "crest": "logos/coventry-apisports.png"
+    },
     "Crystal Palace": {
-      "id": 52,
+      "id": 9826,
       "abbr": "CRY",
       "color": "#1B458F",
       "crest": "logos/crystal-palace-apisports.png"
     },
     "Everton": {
-      "id": 45,
+      "id": 8668,
       "abbr": "EVE",
       "color": "#003399",
       "crest": "logos/everton-apisports.png"
     },
     "Fulham": {
-      "id": 36,
+      "id": 9879,
       "abbr": "FUL",
       "color": "#CC0000",
       "crest": "logos/fulham-apisports.png"
     },
+    "Hull City": {
+      "id": 8667,
+      "abbr": "HUL",
+      "color": "#F5971D",
+      "crest": "logos/hull-city-apisports.png"
+    },
+    "Ipswich": {
+      "id": 9902,
+      "abbr": "IPS",
+      "color": "#00448A",
+      "crest": "logos/ipswich-apisports.png"
+    },
     "Leeds": {
-      "id": 63,
+      "id": 8463,
       "abbr": "LEE",
       "color": "#1D428A",
       "crest": "logos/leeds-apisports.png"
     },
+    "Leicester": {
+      "id": 8197,
+      "abbr": "LEI",
+      "color": "#003090",
+      "crest": "logos/leicester-apisports.png"
+    },
     "Liverpool": {
-      "id": 40,
+      "id": 8650,
       "abbr": "LIV",
       "color": "#C8102E",
       "crest": "logos/liverpool-apisports.png"
     },
     "Man City": {
-      "id": 50,
+      "id": 8456,
       "abbr": "MCI",
       "color": "#6CABDD",
       "crest": "logos/man-city-apisports.png"
     },
     "Man United": {
-      "id": 33,
+      "id": 10260,
       "abbr": "MUN",
       "color": "#DA291C",
       "crest": "logos/man-united-apisports.png"
     },
     "Newcastle": {
-      "id": 34,
+      "id": 10261,
       "abbr": "NEW",
       "color": "#241F20",
       "crest": "logos/newcastle-apisports.png"
     },
     "Nott'm Forest": {
-      "id": 65,
+      "id": 10203,
       "abbr": "NFO",
       "color": "#DD0000",
       "crest": "logos/nottingham-forest-apisports.png"
     },
+    "Southampton": {
+      "id": 8466,
+      "abbr": "SOU",
+      "color": "#D71920",
+      "crest": "logos/southampton-apisports.png"
+    },
     "Sunderland": {
-      "id": 746,
+      "id": 8472,
       "abbr": "SUN",
       "color": "#EB172B",
       "crest": "logos/sunderland-apisports.png"
     },
     "Tottenham": {
-      "id": 47,
+      "id": 8586,
       "abbr": "TOT",
       "color": "#132257",
       "crest": "logos/tottenham-apisports.png"

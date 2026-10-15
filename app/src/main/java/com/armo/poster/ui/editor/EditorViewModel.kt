@@ -82,6 +82,34 @@ class EditorViewModel(
         _matchData.value = _matchData.value.copy(away = team)
     }
 
+    fun updateHomeColor(colorHex: String) {
+        _matchData.value = _matchData.value.copy(
+            home = _matchData.value.home.copy(color = colorHex)
+        )
+    }
+
+    fun updateAwayColor(colorHex: String) {
+        _matchData.value = _matchData.value.copy(
+            away = _matchData.value.away.copy(color = colorHex)
+        )
+    }
+
+    fun resetHomeColorToDefault() {
+        val defaultTeam = teamRegistry.getTeam(_matchData.value.home.name)
+        val defaultColor = defaultTeam?.color ?: "#034694"
+        updateHomeColor(defaultColor)
+    }
+
+    fun resetAwayColorToDefault() {
+        val defaultTeam = teamRegistry.getTeam(_matchData.value.away.name)
+        val defaultColor = defaultTeam?.color ?: "#DA291C"
+        updateAwayColor(defaultColor)
+    }
+
+    fun getDefaultColorForTeam(teamName: String): String {
+        return teamRegistry.getTeam(teamName)?.color ?: "#00E5FF"
+    }
+
     fun updateHomeFormation(formation: String) {
         _matchData.value = _matchData.value.copy(homeFormation = formation)
     }
@@ -160,5 +188,57 @@ class EditorViewModel(
             list.removeAt(index)
             _matchData.value = _matchData.value.copy(takeaways = list)
         }
+    }
+
+    fun updateXgLayout(layout: String) {
+        _matchData.value = _matchData.value.copy(xgLayout = layout)
+    }
+
+    fun updateFontSizeScale(scale: String) {
+        _matchData.value = _matchData.value.copy(fontSizeScale = scale)
+    }
+
+    fun updateCanvasSpace(space: String) {
+        _matchData.value = _matchData.value.copy(canvasSpace = space)
+    }
+
+    fun updateHighContrast(enabled: Boolean) {
+        _matchData.value = _matchData.value.copy(highContrast = enabled)
+    }
+
+    fun updateBodyFontSize(size: Int) {
+        _matchData.value = _matchData.value.copy(bodyFontSize = size)
+    }
+
+    fun updateNameFontSize(size: Int) {
+        _matchData.value = _matchData.value.copy(nameFontSize = size)
+    }
+
+    fun updateFontWeight(weight: Int) {
+        _matchData.value = _matchData.value.copy(fontWeight = weight)
+    }
+
+    fun updateLineHeight(height: Double) {
+        _matchData.value = _matchData.value.copy(lineHeight = height)
+    }
+
+    fun updateFontFamily(family: String) {
+        _matchData.value = _matchData.value.copy(fontFamily = family)
+    }
+
+    fun updateBgColor(color: String) {
+        _matchData.value = _matchData.value.copy(bgColor = color)
+    }
+
+    fun updatePanelColor(color: String) {
+        _matchData.value = _matchData.value.copy(panelColor = color)
+    }
+
+    fun updateAccentColor(color: String) {
+        _matchData.value = _matchData.value.copy(accentColor = color)
+    }
+
+    fun updateBodyTextColor(color: String) {
+        _matchData.value = _matchData.value.copy(bodyTextColor = color)
     }
 }

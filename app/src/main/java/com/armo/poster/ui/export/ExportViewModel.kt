@@ -11,6 +11,7 @@ import com.armo.poster.export.ExportHelper
 import com.armo.poster.export.ShareHelper
 import com.armo.poster.renderer.PosterRenderer
 import com.armo.poster.renderer.RenderResult
+import com.armo.poster.util.AppLog
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,12 +31,14 @@ class ExportViewModel(
     val scale: StateFlow<Int> = _scale.asStateFlow()
 
     fun setScale(newScale: Int) {
+        AppLog.i("ExportViewModel", "Resolution scale toggled to: ${newScale}x (${if (newScale == 2) "2400x2400" else "1200x1200"})")
         _scale.value = newScale
     }
 
     fun renderPoster(data: MatchData) {
         viewModelScope.launch {
             _isRendering.value = true
+            AppLog.i("ExportViewModel", "Starting render for match ${data.home.name} vs ${data.away.name} (GW: ${data.gwLabel})")
             val result = posterRenderer.render(data, _scale.value)
             _renderResult.value = result
             _isRendering.value = false
@@ -43,24 +46,36 @@ class ExportViewModel(
     }
 
     fun saveToGallery(context: Context, data: MatchData) {
-        val currentBitmap = (renderResult.value as? RenderResult.Success)?.bitmap ?: return
+        val currentBitmap = when (val res = renderResult.value) {
+            is RenderResult.Success -> res.bitmap
+            is RenderResult.TooLong -> res.bitmap
+            else -> null
+        } ?: return
         viewModelScope.launch {
             val headline = DerivedValues.formatHeadline(data.home.abbr, data.away.abbr).replace(" ", "-")
             val fileName = "ARMO-NOTES-$headline-${data.gwLabel}-${System.currentTimeMillis()}"
+            AppLog.i("ExportViewModel", "Saving poster to Gallery: $fileName.png (${currentBitmap.width}x${currentBitmap.height})")
             val uri = ExportHelper.saveToGallery(context, currentBitmap, fileName)
             if (uri != null) {
+                AppLog.i("ExportViewModel", "Saved successfully to gallery: $uri")
                 Toast.makeText(context, "در گالری ذخیره شد (Pictures/ARMO NOTES)", Toast.LENGTH_LONG).show()
             } else {
+                AppLog.e("ExportViewModel", "Failed to save image to gallery")
                 Toast.makeText(context, "خطا در ذخیره تصویر", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     fun shareToX(context: Context, data: MatchData) {
-        val currentBitmap = (renderResult.value as? RenderResult.Success)?.bitmap ?: return
+        val currentBitmap = when (val res = renderResult.value) {
+            is RenderResult.Success -> res.bitmap
+            is RenderResult.TooLong -> res.bitmap
+            else -> null
+        } ?: return
         viewModelScope.launch {
             val headline = DerivedValues.formatHeadline(data.home.abbr, data.away.abbr)
             val fileName = "ARMO-NOTES-${data.gwLabel}"
+            AppLog.i("ExportViewModel", "Sharing poster to external app: $fileName (${currentBitmap.width}x${currentBitmap.height})")
             ShareHelper.sharePoster(
                 context = context,
                 bitmap = currentBitmap,

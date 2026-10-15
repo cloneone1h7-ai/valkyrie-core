@@ -27,7 +27,20 @@ data class PosterPayload(
     val awayBarWidthPct: Double,
     val gameNotes: List<String>,
     val pairedRows: List<PairedBlock>,
-    val takeaways: List<String>
+    val takeaways: List<String>,
+    val xgLayout: String = "center_out",
+    val fontSizeScale: String = "standard",
+    val canvasSpace: String = "expanded",
+    val highContrast: Boolean = false,
+    val bodyFontSize: Int = 19,
+    val nameFontSize: Int = 29,
+    val fontWeight: Int = 400,
+    val lineHeight: Double = 1.35,
+    val fontFamily: String = "Inter",
+    val bgColor: String = "#0B1A14",
+    val panelColor: String = "rgba(255,255,255,0.035)",
+    val accentColor: String = "#D4FF00",
+    val bodyTextColor: String = "#E2E8F0"
 )
 
 object HtmlBuilder {
@@ -38,7 +51,7 @@ object HtmlBuilder {
     }
 
     fun buildPayload(data: MatchData, assetBaseUrl: String = "https://appassets.androidplatform.net/assets/"): String {
-        val (homePct, awayPct) = DerivedValues.calculateBarWidths(data.homeXg, data.awayXg)
+        val (homePct, awayPct) = DerivedValues.calculateBarWidths(data.homeXg, data.awayXg, data.xgLayout)
         val paired = DerivedValues.pairPlayerBlocks(data.homeBlocks, data.awayBlocks)
 
         val homeCrestUrl = resolveCrestUrl(data.home.crestAsset, assetBaseUrl)
@@ -62,7 +75,20 @@ object HtmlBuilder {
             awayBarWidthPct = awayPct,
             gameNotes = data.gameNotes,
             pairedRows = paired,
-            takeaways = data.takeaways
+            takeaways = data.takeaways,
+            xgLayout = data.xgLayout,
+            fontSizeScale = data.fontSizeScale,
+            canvasSpace = data.canvasSpace,
+            highContrast = data.highContrast,
+            bodyFontSize = data.bodyFontSize,
+            nameFontSize = data.nameFontSize,
+            fontWeight = data.fontWeight,
+            lineHeight = data.lineHeight,
+            fontFamily = data.fontFamily,
+            bgColor = data.bgColor,
+            panelColor = data.panelColor,
+            accentColor = data.accentColor,
+            bodyTextColor = data.bodyTextColor
         )
 
         return json.encodeToString(payload)

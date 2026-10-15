@@ -6,17 +6,29 @@ import kotlin.math.round
 object DerivedValues {
 
     /**
-     * Calculates proportional bar widths for the xG comparison bars.
-     * The larger xG gets 100%; the other gets (xg / max * 100) rounded to 1 decimal place.
+     * Calculates proportional bar widths for the xG comparison bars on a 0.0 to 10.0 scale.
+     * Minimum width is 22.0% (so label "xG TEAMNAME" fits comfortably).
+     * Maximum width is 80.0% (leaving 20% for the xG number so it never overflows the panel).
+     * Linear/subtle scale across 0.0 .. 10.0 xG so 10.0 is near the end.
      */
-    fun calculateBarWidths(homeXg: Double, awayXg: Double): Pair<Double, Double> {
-        if (homeXg <= 0.0 && awayXg <= 0.0) {
-            return Pair(100.0, 100.0)
+    fun calculateBarWidths(homeXg: Double, awayXg: Double, layout: String = "center_out"): Pair<Double, Double> {
+        val (minPct, maxPct, maxScale) = when (layout) {
+            "center_out" -> Triple(12.0, 100.0, 4.5)
+            "side_by_side" -> Triple(42.0, 76.0, 10.0)
+            else -> Triple(22.0, 80.0, 10.0) // "stacked"
         }
-        val maxXg = max(homeXg, awayXg)
-        val homePct = if (maxXg > 0.0) round((homeXg / maxXg) * 1000.0) / 10.0 else 0.0
-        val awayPct = if (maxXg > 0.0) round((awayXg / maxXg) * 1000.0) / 10.0 else 0.0
-        return Pair(homePct, awayPct)
+        val range = maxPct - minPct
+
+        val clampedHome = homeXg.coerceIn(0.0, maxScale)
+        val clampedAway = awayXg.coerceIn(0.0, maxScale)
+
+        val homePct = minPct + (clampedHome / maxScale) * range
+        val awayPct = minPct + (clampedAway / maxScale) * range
+
+        return Pair(
+            round(homePct * 10.0) / 10.0,
+            round(awayPct * 10.0) / 10.0
+        )
     }
 
     /**

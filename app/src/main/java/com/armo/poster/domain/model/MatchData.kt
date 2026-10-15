@@ -16,7 +16,20 @@ data class MatchData(
     val gameNotes: List<String> = emptyList(),
     val homeBlocks: List<PlayerBlock> = emptyList(),
     val awayBlocks: List<PlayerBlock> = emptyList(),
-    val takeaways: List<String> = emptyList()
+    val takeaways: List<String> = emptyList(),
+    val xgLayout: String = "center_out",
+    val fontSizeScale: String = "standard",
+    val canvasSpace: String = "expanded",
+    val highContrast: Boolean = false,
+    val bodyFontSize: Int = 19,
+    val nameFontSize: Int = 29,
+    val fontWeight: Int = 400,
+    val lineHeight: Double = 1.35,
+    val fontFamily: String = "Inter",
+    val bgColor: String = "#0B1A14",
+    val panelColor: String = "rgba(255,255,255,0.035)",
+    val accentColor: String = "#D4FF00",
+    val bodyTextColor: String = "#E2E8F0"
 )
 
 @Serializable

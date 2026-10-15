@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.armo.poster.R
+import androidx.compose.material.icons.filled.BugReport
 import com.armo.poster.domain.model.MatchData
 import com.armo.poster.renderer.RenderResult
 import com.armo.poster.ui.theme.*
@@ -31,7 +32,8 @@ import com.armo.poster.ui.theme.*
 fun ExportScreen(
     viewModel: ExportViewModel,
     matchData: MatchData,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onNavigateToLogs: () -> Unit
 ) {
     val context = LocalContext.current
     val isRendering by viewModel.isRendering.collectAsState()
@@ -61,6 +63,15 @@ fun ExportScreen(
                         )
                     }
                 },
+                actions = {
+                    IconButton(onClick = onNavigateToLogs) {
+                        Icon(
+                            imageVector = Icons.Default.BugReport,
+                            contentDescription = stringResource(R.string.logs_title),
+                            tint = VoltAccent
+                        )
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = BgDark)
             )
         },
@@ -70,6 +81,7 @@ fun ExportScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .navigationBarsPadding()
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -114,7 +126,11 @@ fun ExportScreen(
                     ) {
                         Column(modifier = Modifier.padding(12.dp)) {
                             Text(
-                                stringResource(R.string.status_fits, res.fitLevel),
+                                if (res.fitLevel > 0) {
+                                    "تطبیق خودکار پوستر (سطح ${res.fitLevel})"
+                                } else {
+                                    "ابعاد کاملاً متناسب و استاندارد (FITS)"
+                                },
                                 color = SuccessGreen,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 15.sp
@@ -137,10 +153,10 @@ fun ExportScreen(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
-                            stringResource(R.string.status_overflow, res.overflowPx),
-                            color = Color(0xFFFF9100),
+                            "پوستر با حداکثر مقیاس تطبیق داده شد (سطح ${res.fitLevel})",
+                            color = Color(0xFFFFB300),
                             fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp,
+                            fontSize = 14.sp,
                             modifier = Modifier.padding(12.dp)
                         )
                     }
@@ -151,13 +167,29 @@ fun ExportScreen(
                         shape = RoundedCornerShape(10.dp),
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(
-                            stringResource(R.string.status_failed, res.reason),
-                            color = ErrorRed,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 14.sp,
-                            modifier = Modifier.padding(12.dp)
-                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                stringResource(R.string.status_failed, res.reason),
+                                color = ErrorRed,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 14.sp,
+                                modifier = Modifier.weight(1f)
+                            )
+                            TextButton(onClick = onNavigateToLogs) {
+                                Text(
+                                    stringResource(R.string.view_logs),
+                                    color = VoltAccent,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 13.sp
+                                )
+                            }
+                        }
                     }
                 }
                 null -> {}
@@ -185,16 +217,26 @@ fun ExportScreen(
                         )
                     }
                 } else {
-                    val success = renderResult as? RenderResult.Success
-                    if (success != null) {
+                    val previewBitmap = when (val res = renderResult) {
+                        is RenderResult.Success -> res.bitmap
+                        is RenderResult.TooLong -> res.bitmap
+                        else -> null
+                    }
+                    if (previewBitmap != null) {
                         Image(
-                            bitmap = success.bitmap.asImageBitmap(),
+                            bitmap = previewBitmap.asImageBitmap(),
                             contentDescription = "Poster Preview",
                             modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.Fit
                         )
                     }
                 }
+            }
+
+            val hasBitmap = when (val res = renderResult) {
+                is RenderResult.Success -> true
+                is RenderResult.TooLong -> res.bitmap != null
+                else -> false
             }
 
             // Action Buttons
@@ -204,7 +246,7 @@ fun ExportScreen(
             ) {
                 Button(
                     onClick = { viewModel.saveToGallery(context, matchData) },
-                    enabled = !isRendering && renderResult is RenderResult.Success,
+                    enabled = !isRendering && hasBitmap,
                     modifier = Modifier.weight(1f).height(50.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = VoltAccent,
@@ -219,7 +261,7 @@ fun ExportScreen(
 
                 Button(
                     onClick = { viewModel.shareToX(context, matchData) },
-                    enabled = !isRendering && renderResult is RenderResult.Success,
+                    enabled = !isRendering && hasBitmap,
                     modifier = Modifier.weight(1f).height(50.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = SurfaceDark,

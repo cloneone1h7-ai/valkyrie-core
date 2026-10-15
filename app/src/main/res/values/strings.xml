@@ -48,4 +48,18 @@
 
     <string name="scale_2x">High Resolution (2400×2400)</string>
     <string name="scale_1x">Standard (1200×1200)</string>
+
+    <string name="logs_title">System Diagnostic Logs</string>
+    <string name="copy_logs">Copy All Logs</string>
+    <string name="share_logs">Share Log File</string>
+    <string name="clear_logs">Clear Logs</string>
+    <string name="logs_copied">All logs copied to clipboard</string>
+    <string name="logs_cleared">Logs cleared</string>
+    <string name="filter_all">ALL</string>
+    <string name="filter_error">ERROR</string>
+    <string name="filter_warn">WARN</string>
+    <string name="filter_info">INFO</string>
+    <string name="view_logs">View Logs</string>
+    <string name="device_telemetry">Device &amp; Render Telemetry</string>
+    <string name="no_logs">No logs recorded yet</string>
 </resources>

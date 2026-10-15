@@ -6,7 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class FitMetrics(
     val innerH: Int = 0,
-    val contentH: Int = 0
+    val contentH: Int = 0,
+    val unscaledH: Int = 0,
+    val scale: Double = 1.0
 ) {
     val overflowPx: Int
         get() = (contentH - innerH).coerceAtLeast(0)
@@ -24,6 +26,7 @@ sealed class RenderResult {
     ) : RenderResult()
 
     data class TooLong(
+        val bitmap: Bitmap? = null,
         val overflowPx: Int,
         val fitLevel: Int
     ) : RenderResult()
