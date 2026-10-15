@@ -1,6 +1,6 @@
-# ARMO Poster — Android App (arm64-v8a)
+# Valkyrie Core — Android Layout & Typography Studio (arm64-v8a)
 
-اپلیکیشن مستقل و آفلاین اندروید برای تولید پوسترهای مسابقه **ARMO NOTES** با کیفیت ۲۴۰۰×۲۴۰۰ پیکسل.
+موتور مستقل و آفلاین رندر گرافیکی، چیدمان متقارن و تایپوگرافی تطبیقی (Adaptive Auto-Fit) برای اندروید با خروجی اولترا HD با ابعاد ۲۴۰۰×۲۴۰۰ پیکسل.
 
 ---
 
