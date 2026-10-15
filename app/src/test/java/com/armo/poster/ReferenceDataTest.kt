@@ -17,8 +17,8 @@ class ReferenceDataTest {
 
         // 1. Bar widths
         val (homePct, awayPct) = DerivedValues.calculateBarWidths(sample.homeXg, sample.awayXg)
-        assertEquals(79.7, homePct, 0.1)
-        assertEquals(100.0, awayPct, 0.0)
+        assertEquals(45.6, homePct, 0.1)
+        assertEquals(50.9, awayPct, 0.1)
 
         // 2. Headline format
         val headline = DerivedValues.formatHeadline(sample.home.abbr, sample.away.abbr)
@@ -36,8 +36,8 @@ class ReferenceDataTest {
         val payload = HtmlBuilder.buildPayload(sample)
         assertTrue(payload.contains("CHE"))
         assertTrue(payload.contains("BOU"))
-        assertTrue(payload.contains("79.7"))
-        assertTrue(payload.contains("100.0"))
+        assertTrue(payload.contains("45.6"))
+        assertTrue(payload.contains("50.9"))
 
         // 5. Fit test simulation (Reference data fits cleanly within inner frame)
         val mockReferenceMetrics = FitMetrics(innerH = 1112, contentH = 1084)

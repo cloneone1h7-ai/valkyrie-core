@@ -364,6 +364,8 @@ window.__armo = {
           });
         }))
       ]).then(function() {
+        window.__armo.autoFit();
+        window.__armo.applyViewportScale();
         if (window.PosterBridge && window.PosterBridge.onReady) {
           window.PosterBridge.onReady();
         }

@@ -24,7 +24,7 @@ class FitLadderTest {
     }
 
     @Test
-    fun maxLevel_isSix() {
-        assertEquals(6, FitLadder.MAX_LEVEL)
+    fun maxLevel_isTen() {
+        assertEquals(10, FitLadder.MAX_LEVEL)
     }
 }

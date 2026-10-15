@@ -181,6 +181,7 @@ class PosterRenderer(
             evaluateJs("window.__armo.applyViewportScale($targetCssSize, $targetCssSize)")
 
             // Step 4: Run fit ladder (Levels 1 to 10)
+            evaluateJs("window.__armo.fit(0)")
             var n = 0
             var metrics = queryMetrics()
             AppLog.i("PosterRenderer", "Initial metrics (fit 0): innerH=${metrics.innerH}, contentH=${metrics.contentH}, fits=${metrics.fits}")

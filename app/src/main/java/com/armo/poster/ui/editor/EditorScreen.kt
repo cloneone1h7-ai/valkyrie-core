@@ -40,9 +40,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -74,6 +76,7 @@ fun EditorScreen(
     var showAwayColorPicker by remember { mutableStateOf(false) }
     var showBgColorPicker by remember { mutableStateOf(false) }
     var showAccentColorPicker by remember { mutableStateOf(false) }
+    var showBodyColorPicker by remember { mutableStateOf(false) }
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     var previewExpanded by remember { mutableStateOf(false) }
 
@@ -130,6 +133,19 @@ fun EditorScreen(
             onColorSelected = { colorHex ->
                 viewModel.updateAccentColor(colorHex)
                 showAccentColorPicker = false
+            }
+        )
+    }
+
+    if (showBodyColorPicker) {
+        ColorPickerDialog(
+            teamName = "رنگ متن و توضیحات پوستر",
+            initialColorHex = matchData.bodyTextColor,
+            defaultColorHex = "#E2E8F0",
+            onDismiss = { showBodyColorPicker = false },
+            onColorSelected = { colorHex ->
+                viewModel.updateBodyTextColor(colorHex)
+                showBodyColorPicker = false
             }
         )
     }
@@ -701,7 +717,8 @@ fun EditorScreen(
                     matchData = matchData,
                     viewModel = viewModel,
                     onRequestBgColorPicker = { showBgColorPicker = true },
-                    onRequestAccentColorPicker = { showAccentColorPicker = true }
+                    onRequestAccentColorPicker = { showAccentColorPicker = true },
+                    onRequestTextColorPicker = { showBodyColorPicker = true }
                 )
             }
             item {
@@ -1070,6 +1087,77 @@ fun ColorPickerDialog(
 
                 HorizontalDivider(color = HairlineColor)
 
+                // Quick Presets: Pure White, Deep Black, and Default
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    OutlinedButton(
+                        onClick = {
+                            hue = 0f
+                            saturation = 0f
+                            value = 1f
+                        },
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(8.dp),
+                        contentPadding = PaddingValues(horizontal = 4.dp, vertical = 6.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White),
+                        border = BorderStroke(1.dp, Color.White)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(10.dp)
+                                .clip(CircleShape)
+                                .background(Color.White)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text("سفید خالص", fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                    }
+
+                    OutlinedButton(
+                        onClick = {
+                            hue = 0f
+                            saturation = 0f
+                            value = 0.05f
+                        },
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(8.dp),
+                        contentPadding = PaddingValues(horizontal = 4.dp, vertical = 6.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = TextMuted),
+                        border = BorderStroke(1.dp, HairlineColor)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(10.dp)
+                                .clip(CircleShape)
+                                .background(Color.Black)
+                                .border(1.dp, HairlineColor, CircleShape)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text("مشکی", fontSize = 11.sp)
+                    }
+
+                    OutlinedButton(
+                        onClick = {
+                            try {
+                                val parsed = AndroidColor.parseColor(defaultColorHex)
+                                val hsv = FloatArray(3)
+                                AndroidColor.colorToHSV(parsed, hsv)
+                                hue = hsv[0]
+                                saturation = hsv[1]
+                                value = hsv[2]
+                            } catch (_: Exception) {}
+                        },
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(8.dp),
+                        contentPadding = PaddingValues(horizontal = 4.dp, vertical = 6.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = VoltAccent),
+                        border = BorderStroke(1.dp, VoltAccent)
+                    ) {
+                        Text("پیش‌فرض", fontSize = 11.sp)
+                    }
+                }
+
                 // 1. Rainbow Hue Spectrum Slider (Color Axis)
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Row(
@@ -1079,39 +1167,41 @@ fun ColorPickerDialog(
                         Text("محور طیف رنگ (Hue)", fontSize = 13.sp, color = TextWhite, fontWeight = FontWeight.SemiBold)
                         Text("${hue.toInt()}°", fontSize = 12.sp, color = VoltAccent)
                     }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(34.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(
-                                Brush.horizontalGradient(
-                                    listOf(
-                                        Color.Red,
-                                        Color.Yellow,
-                                        Color.Green,
-                                        Color.Cyan,
-                                        Color.Blue,
-                                        Color.Magenta,
-                                        Color.Red
-                                    )
-                                )
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Slider(
-                            value = hue,
-                            onValueChange = { hue = it },
-                            valueRange = 0f..360f,
+                    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 4.dp),
-                            colors = SliderDefaults.colors(
-                                thumbColor = Color.White,
-                                activeTrackColor = Color.Transparent,
-                                inactiveTrackColor = Color.Transparent
+                                .height(34.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(
+                                    Brush.horizontalGradient(
+                                        listOf(
+                                            Color.Red,
+                                            Color.Yellow,
+                                            Color.Green,
+                                            Color.Cyan,
+                                            Color.Blue,
+                                            Color.Magenta,
+                                            Color.Red
+                                        )
+                                    )
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Slider(
+                                value = hue,
+                                onValueChange = { hue = it },
+                                valueRange = 0f..360f,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 4.dp),
+                                colors = SliderDefaults.colors(
+                                    thumbColor = Color.White,
+                                    activeTrackColor = Color.Transparent,
+                                    inactiveTrackColor = Color.Transparent
+                                )
                             )
-                        )
+                        }
                     }
                 }
 
@@ -1124,34 +1214,36 @@ fun ColorPickerDialog(
                         Text("روشنایی / تیرگی (Brightness)", fontSize = 13.sp, color = TextWhite, fontWeight = FontWeight.SemiBold)
                         Text("${(value * 100).toInt()}%", fontSize = 12.sp, color = VoltAccent)
                     }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(30.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(
-                                Brush.horizontalGradient(
-                                    listOf(
-                                        Color.Black,
-                                        Color(AndroidColor.HSVToColor(floatArrayOf(hue, saturation, 1.0f)))
-                                    )
-                                )
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Slider(
-                            value = value,
-                            onValueChange = { value = it },
-                            valueRange = 0.1f..1.0f,
+                    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 4.dp),
-                            colors = SliderDefaults.colors(
-                                thumbColor = Color.White,
-                                activeTrackColor = Color.Transparent,
-                                inactiveTrackColor = Color.Transparent
+                                .height(30.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(
+                                    Brush.horizontalGradient(
+                                        listOf(
+                                            Color.Black,
+                                            Color(AndroidColor.HSVToColor(floatArrayOf(hue, saturation, 1.0f)))
+                                        )
+                                    )
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Slider(
+                                value = value,
+                                onValueChange = { value = it },
+                                valueRange = 0.05f..1.0f,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 4.dp),
+                                colors = SliderDefaults.colors(
+                                    thumbColor = Color.White,
+                                    activeTrackColor = Color.Transparent,
+                                    inactiveTrackColor = Color.Transparent
+                                )
                             )
-                        )
+                        }
                     }
                 }
 
@@ -1164,34 +1256,36 @@ fun ColorPickerDialog(
                         Text("غلظت رنگ (Saturation)", fontSize = 13.sp, color = TextWhite, fontWeight = FontWeight.SemiBold)
                         Text("${(saturation * 100).toInt()}%", fontSize = 12.sp, color = VoltAccent)
                     }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(30.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(
-                                Brush.horizontalGradient(
-                                    listOf(
-                                        Color.White,
-                                        Color(AndroidColor.HSVToColor(floatArrayOf(hue, 1.0f, value)))
-                                    )
-                                )
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Slider(
-                            value = saturation,
-                            onValueChange = { saturation = it },
-                            valueRange = 0f..1.0f,
+                    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 4.dp),
-                            colors = SliderDefaults.colors(
-                                thumbColor = Color.White,
-                                activeTrackColor = Color.Transparent,
-                                inactiveTrackColor = Color.Transparent
+                                .height(30.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(
+                                    Brush.horizontalGradient(
+                                        listOf(
+                                            Color.White,
+                                            Color(AndroidColor.HSVToColor(floatArrayOf(hue, 1.0f, value)))
+                                        )
+                                    )
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Slider(
+                                value = saturation,
+                                onValueChange = { saturation = it },
+                                valueRange = 0f..1.0f,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 4.dp),
+                                colors = SliderDefaults.colors(
+                                    thumbColor = Color.White,
+                                    activeTrackColor = Color.Transparent,
+                                    inactiveTrackColor = Color.Transparent
+                                )
                             )
-                        )
+                        }
                     }
                 }
 
@@ -1315,7 +1409,8 @@ fun StudioTabContent(
     matchData: MatchData,
     viewModel: EditorViewModel,
     onRequestBgColorPicker: () -> Unit,
-    onRequestAccentColorPicker: () -> Unit
+    onRequestAccentColorPicker: () -> Unit,
+    onRequestTextColorPicker: () -> Unit
 ) {
     Card(
         colors = CardDefaults.cardColors(containerColor = SurfaceDark),
@@ -1595,17 +1690,41 @@ fun StudioTabContent(
 
                 Spacer(modifier = Modifier.height(4.dp))
 
-                Text(
-                    "رنگ متون و نوشته‌ها (Body Text Color):",
-                    color = TextWhite,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 13.sp
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        "رنگ متون و نوشته‌ها (Body Text):",
+                        color = TextWhite,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 13.sp
+                    )
+                    OutlinedButton(
+                        onClick = onRequestTextColorPicker,
+                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(containerColor = PanelBackground),
+                        border = BorderStroke(1.dp, VoltAccent),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(14.dp)
+                                .clip(CircleShape)
+                                .background(try { Color(AndroidColor.parseColor(matchData.bodyTextColor)) } catch (_: Exception) { TextWhite })
+                                .border(1.dp, TextWhite, CircleShape)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text("رنگ دلخواه", fontSize = 11.sp, color = TextWhite)
+                    }
+                }
                 val textPresets = listOf(
-                    "#E2E8F0" to "نقره‌ای (پیش‌فرض)",
                     "#FFFFFF" to "سفید خالص",
+                    "#E2E8F0" to "نقره‌ای",
                     "#F5F5F0" to "عاجی گرم",
-                    "#CBD5E1" to "طوسی روشن"
+                    "#FDE047" to "زرد لایت",
+                    "#38BDF8" to "فیروزه‌ای"
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -1616,7 +1735,7 @@ fun StudioTabContent(
                         Button(
                             onClick = { viewModel.updateBodyTextColor(hex) },
                             modifier = Modifier.weight(1f),
-                            contentPadding = PaddingValues(horizontal = 4.dp, vertical = 6.dp),
+                            contentPadding = PaddingValues(horizontal = 2.dp, vertical = 6.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (isSelected) VoltAccent else PanelBackground,
                                 contentColor = if (isSelected) BgDark else TextWhite
@@ -1625,7 +1744,7 @@ fun StudioTabContent(
                         ) {
                             Text(
                                 label,
-                                fontSize = 10.sp,
+                                fontSize = 9.sp,
                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
                             )
                         }

@@ -13,7 +13,7 @@ object DerivedValues {
      */
     fun calculateBarWidths(homeXg: Double, awayXg: Double, layout: String = "center_out"): Pair<Double, Double> {
         val (minPct, maxPct, maxScale) = when (layout) {
-            "center_out" -> Triple(12.0, 100.0, 4.5)
+            "center_out" -> Triple(25.0, 100.0, 4.0)
             "side_by_side" -> Triple(42.0, 76.0, 10.0)
             else -> Triple(22.0, 80.0, 10.0) // "stacked"
         }

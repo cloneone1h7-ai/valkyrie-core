@@ -10,22 +10,22 @@ class DerivedValuesTest {
     @Test
     fun calculateBarWidths_withUnequalXg_scalesProportionally() {
         val (homePct, awayPct) = DerivedValues.calculateBarWidths(homeXg = 1.10, awayXg = 1.38)
-        assertEquals(79.7, homePct, 0.1)
-        assertEquals(100.0, awayPct, 0.0)
+        assertEquals(45.6, homePct, 0.1)
+        assertEquals(50.9, awayPct, 0.1)
     }
 
     @Test
-    fun calculateBarWidths_withEqualXg_returnsBothHundredPercent() {
+    fun calculateBarWidths_withEqualXg_returnsBothEqualPercent() {
         val (homePct, awayPct) = DerivedValues.calculateBarWidths(homeXg = 2.0, awayXg = 2.0)
-        assertEquals(100.0, homePct, 0.0)
-        assertEquals(100.0, awayPct, 0.0)
+        assertEquals(62.5, homePct, 0.1)
+        assertEquals(62.5, awayPct, 0.1)
     }
 
     @Test
     fun calculateBarWidths_withZeroXg_handlesGracefully() {
         val (homePct, awayPct) = DerivedValues.calculateBarWidths(homeXg = 0.0, awayXg = 1.50)
-        assertEquals(0.0, homePct, 0.0)
-        assertEquals(100.0, awayPct, 0.0)
+        assertEquals(25.0, homePct, 0.1)
+        assertEquals(53.1, awayPct, 0.1)
     }
 
     @Test

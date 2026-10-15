@@ -54,7 +54,7 @@ html, body {
   transform-origin: 0 0;
   overflow: hidden;
   background: var(--bg);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body, 'Inter', sans-serif);
   color: var(--white);
 }
 
@@ -197,20 +197,24 @@ html, body {
 
 .slide.fit3 .matchrow img { width: 92px !important; height: 92px !important; }
 .slide.fit3 .headline { font-size: 76px !important; }
-.slide.fit3 .cellname { font-size: 27px !important; }
-.slide.fit3 .bullets li { font-size: 18px !important; padding-left: 19px !important; }
+.slide.fit3 .cellname { font-size: calc(var(--name-font-size, 29px) * 0.95) !important; }
+.slide.fit3 .bullets li { font-size: calc(var(--body-font-size, 19px) * 0.95) !important; padding-left: 19px !important; }
 
 .slide.fit4 .gap-a { height: 6px !important; }
 .slide.fit4 .gap-b { height: 6px !important; }
 .slide.fit4 .scoreline { font-size: 23px !important; }
-.slide.fit4 #home-bar, .slide.fit4 #away-bar { height: 35px !important; font-size: 17px !important; }
-.slide.fit4 #home-xg-val, .slide.fit4 #away-xg-val { font-size: 35px !important; }
+.slide.fit4 #home-bar-co, .slide.fit4 #away-bar-co { height: 25px !important; }
+.slide.fit4 #home-bar-stacked, .slide.fit4 #away-bar-stacked { height: 35px !important; font-size: 17px !important; }
+.slide.fit4 #home-bar-side, .slide.fit4 #away-bar-side { height: 35px !important; font-size: 16px !important; }
+.slide.fit4 #home-xg-val-stacked, .slide.fit4 #away-xg-val-stacked { font-size: 35px !important; }
+.slide.fit4 #home-xg-val-side, .slide.fit4 #away-xg-val-side { font-size: 32px !important; }
+.slide.fit4 #home-xg-val-co, .slide.fit4 #away-xg-val-co { font-size: 24px !important; }
 .slide.fit4 .takeaway .t { font-size: 24px !important; }
 
 .slide.fit5 .rows .r { padding: 5px 0 4px !important; }
-.slide.fit5 .bullets li { font-size: 17px !important; line-height: 1.25 !important; margin-top: 1px !important; }
+.slide.fit5 .bullets li { font-size: calc(var(--body-font-size, 19px) * 0.90) !important; line-height: 1.25 !important; margin-top: 1px !important; }
 .slide.fit5 .bullets li::before { top: 9px !important; }
-.slide.fit5 .cellname { font-size: 25px !important; }
+.slide.fit5 .cellname { font-size: calc(var(--name-font-size, 29px) * 0.90) !important; }
 .slide.fit5 .panel { padding: 9px 16px !important; }
 .slide.fit5 .takeaway { padding: 9px 18px !important; }
 
@@ -222,15 +226,19 @@ html, body {
 .slide.fit6 .gap-b { height: 4px !important; }
 
 .slide.fit7 .rows .r { padding: 4px 0 3px !important; }
-.slide.fit7 .bullets li { font-size: 16px !important; line-height: 1.22 !important; }
-.slide.fit7 .cellname { font-size: 23px !important; }
-.slide.fit7 #home-bar, .slide.fit7 #away-bar { height: 32px !important; font-size: 15px !important; }
-.slide.fit7 #home-xg-val, .slide.fit7 #away-xg-val { font-size: 32px !important; }
+.slide.fit7 .bullets li { font-size: calc(var(--body-font-size, 19px) * 0.85) !important; line-height: 1.22 !important; }
+.slide.fit7 .cellname { font-size: calc(var(--name-font-size, 29px) * 0.85) !important; }
+.slide.fit7 #home-bar-co, .slide.fit7 #away-bar-co { height: 22px !important; }
+.slide.fit7 #home-bar-stacked, .slide.fit7 #away-bar-stacked { height: 32px !important; font-size: 15px !important; }
+.slide.fit7 #home-bar-side, .slide.fit7 #away-bar-side { height: 32px !important; font-size: 14px !important; }
+.slide.fit7 #home-xg-val-stacked, .slide.fit7 #away-xg-val-stacked { font-size: 32px !important; }
+.slide.fit7 #home-xg-val-side, .slide.fit7 #away-xg-val-side { font-size: 28px !important; }
+.slide.fit7 #home-xg-val-co, .slide.fit7 #away-xg-val-co { font-size: 22px !important; }
 .slide.fit7 .scoreline { font-size: 21px !important; }
 
-.slide.fit8 .bullets li { font-size: 15px !important; line-height: 1.20 !important; padding-left: 16px !important; }
+.slide.fit8 .bullets li { font-size: calc(var(--body-font-size, 19px) * 0.80) !important; line-height: 1.20 !important; padding-left: 16px !important; }
 .slide.fit8 .bullets li::before { top: 8px !important; width: 3px !important; height: 3px !important; }
-.slide.fit8 .cellname { font-size: 22px !important; }
+.slide.fit8 .cellname { font-size: calc(var(--name-font-size, 29px) * 0.80) !important; }
 .slide.fit8 .panel { padding: 8px 14px !important; }
 .slide.fit8 .takeaway { padding: 8px 16px !important; }
 .slide.fit8 .takeaway .t { font-size: 22px !important; }
@@ -239,25 +247,25 @@ html, body {
 .slide.fit9 .matchrow img { width: 74px !important; height: 74px !important; }
 .slide.fit9 .rows .r { padding: 3px 0 2px !important; }
 
-.slide.fit10 .bullets li { font-size: 14.5px !important; line-height: 1.18 !important; }
-.slide.fit10 .cellname { font-size: 20px !important; }
+.slide.fit10 .bullets li { font-size: calc(var(--body-font-size, 19px) * 0.75) !important; line-height: 1.18 !important; }
+.slide.fit10 .cellname { font-size: calc(var(--name-font-size, 29px) * 0.75) !important; }
 .slide.fit10 .tag { font-size: 24px !important; }
 .slide.fit10 .chip .pill { font-size: 20px !important; }
 
 /* Customization: Font Size Options */
-.slide.font-large .bullets li { font-size: 21.5px !important; line-height: 1.36 !important; }
-.slide.font-large .cellname { font-size: 31px !important; }
+.slide.font-large .bullets li { font-size: calc(var(--body-font-size, 19px) * 1.12) !important; line-height: 1.36 !important; }
+.slide.font-large .cellname { font-size: calc(var(--name-font-size, 29px) * 1.10) !important; }
 .slide.font-large .scoreline { font-size: 26px !important; }
 .slide.font-large .takeaway .t { font-size: 28px !important; }
 
-.slide.font-xlarge .bullets li { font-size: 23.5px !important; line-height: 1.38 !important; }
-.slide.font-xlarge .cellname { font-size: 33px !important; }
+.slide.font-xlarge .bullets li { font-size: calc(var(--body-font-size, 19px) * 1.22) !important; line-height: 1.38 !important; }
+.slide.font-xlarge .cellname { font-size: calc(var(--name-font-size, 29px) * 1.18) !important; }
 .slide.font-xlarge .scoreline { font-size: 28px !important; }
 .slide.font-xlarge .takeaway .t { font-size: 30px !important; }
 
 /* Customization: High Contrast & Readability */
-.slide.high-contrast .bullets li { color: #F5FBF7 !important; font-weight: 500 !important; }
-.slide.high-contrast .cellname { color: #FFFFFF !important; font-weight: 800 !important; }
+.slide.high-contrast .bullets li { color: var(--body, #F5FBF7) !important; font-weight: 500 !important; }
+.slide.high-contrast .cellname { color: var(--white, #FFFFFF) !important; font-weight: 800 !important; }
 .slide.high-contrast .scoreline { color: #FFFFFF !important; font-weight: 700 !important; }
 .slide.high-contrast #game-notes-title { color: #FFFFFF !important; }
 .slide.high-contrast .takeaway { background: #0c1c15 !important; border: 1px solid rgba(255,255,255,0.18) !important; border-left: 4px solid var(--volt) !important; }
@@ -300,9 +308,9 @@ html, body {
         <div id="xg-container-centerout" style="display:flex; align-items:center; justify-content:space-between; margin-top:12px; gap:10px;">
           <!-- Left side: Home team (extends from center to the left towards Home team) -->
           <div style="flex:1; display:flex; align-items:center; justify-content:flex-end; gap:12px; min-width:0;">
-            <span id="home-xg-val-co" style="font-family:'Anton'; font-size:38px; line-height:1; color:var(--white); flex:0 0 auto;">1.10</span>
-            <div style="flex:1; max-width:260px; display:flex; justify-content:flex-end;">
-              <div id="home-bar-co" style="height:28px; min-width:28px; width:45%; background:linear-gradient(270deg, #034694, rgba(3,70,148,0.3)); border-radius:999px 4px 4px 999px; box-shadow:0 0 10px rgba(0,0,0,0.3);"></div>
+            <span id="home-xg-val-co" style="font-family:'Anton'; font-size:26px; line-height:1; color:var(--white); flex:0 0 auto; letter-spacing:0.5px;">1.10</span>
+            <div style="flex:1; max-width:360px; display:flex; justify-content:flex-end;">
+              <div id="home-bar-co" style="height:28px; min-width:32px; width:45%; background:linear-gradient(270deg, #034694, rgba(3,70,148,0.3)); border-radius:999px 4px 4px 999px; box-shadow:0 0 10px rgba(0,0,0,0.3);"></div>
             </div>
           </div>
 
@@ -313,10 +321,10 @@ html, body {
 
           <!-- Right side: Away team (extends from center to the right towards Away team) -->
           <div style="flex:1; display:flex; align-items:center; justify-content:flex-start; gap:12px; min-width:0;">
-            <div style="flex:1; max-width:260px; display:flex; justify-content:flex-start;">
-              <div id="away-bar-co" style="height:28px; min-width:28px; width:70%; background:linear-gradient(90deg, #DA291C, rgba(218,41,28,0.3)); border-radius:4px 999px 999px 4px; box-shadow:0 0 10px rgba(0,0,0,0.3);"></div>
+            <div style="flex:1; max-width:360px; display:flex; justify-content:flex-start;">
+              <div id="away-bar-co" style="height:28px; min-width:32px; width:70%; background:linear-gradient(90deg, #DA291C, rgba(218,41,28,0.3)); border-radius:4px 999px 999px 4px; box-shadow:0 0 10px rgba(0,0,0,0.3);"></div>
             </div>
-            <span id="away-xg-val-co" style="font-family:'Anton'; font-size:38px; line-height:1; color:var(--white); flex:0 0 auto;">2.00</span>
+            <span id="away-xg-val-co" style="font-family:'Anton'; font-size:26px; line-height:1; color:var(--white); flex:0 0 auto; letter-spacing:0.5px;">2.00</span>
           </div>
         </div>
 
@@ -336,13 +344,13 @@ html, body {
 
         <!-- Side-by-Side xG Container (Saves vertical space and enlarges layout) -->
         <div id="xg-container-sidebyside" style="display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items:center; margin-top:10px;">
-          <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+          <div style="display:flex; align-items:center; justify-content:flex-start; gap:12px; min-width:0;">
             <div id="home-bar-side" style="height:38px; min-width:130px; background:#034694; border-radius:8px; display:flex; align-items:center; padding:0 14px; font-size:17px; font-weight:700; color:#FFFFFF; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">xG CHELSEA</div>
             <span id="home-xg-val-side" style="font-family:'Anton'; font-size:36px; color:var(--white); flex:0 0 auto;">1.10</span>
           </div>
-          <div style="display:flex; align-items:center; gap:12px; min-width:0;">
-            <div id="away-bar-side" style="height:38px; min-width:130px; background:#DA291C; border-radius:8px; display:flex; align-items:center; padding:0 14px; font-size:17px; font-weight:700; color:#FFFFFF; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">xG BOURNEMOUTH</div>
+          <div style="display:flex; align-items:center; justify-content:flex-end; gap:12px; min-width:0;">
             <span id="away-xg-val-side" style="font-family:'Anton'; font-size:36px; color:var(--white); flex:0 0 auto;">1.38</span>
+            <div id="away-bar-side" style="height:38px; min-width:130px; background:#DA291C; border-radius:8px; display:flex; align-items:center; justify-content:flex-end; padding:0 14px; font-size:17px; font-weight:700; color:#FFFFFF; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">xG BOURNEMOUTH</div>
           </div>
         </div>
 

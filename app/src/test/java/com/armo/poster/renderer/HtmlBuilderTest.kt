@@ -29,8 +29,8 @@ class HtmlBuilderTest {
 
         val json = HtmlBuilder.buildPayload(match, assetBaseUrl = "https://appassets.androidplatform.net/assets/")
         assertTrue(json.contains("\"gwLabel\":\"GW6\""))
-        assertTrue(json.contains("\"homeBarWidthPct\":79.7"))
-        assertTrue(json.contains("\"awayBarWidthPct\":100.0"))
+        assertTrue(json.contains("\"homeBarWidthPct\":45.6"))
+        assertTrue(json.contains("\"awayBarWidthPct\":50.9"))
         assertTrue(json.contains("\"homeXgStr\":\"1.10\""))
         assertTrue(json.contains("\"awayXgStr\":\"1.38\""))
         assertTrue(json.contains("chelsea-apisports.png"))
